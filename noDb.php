@@ -85,3 +85,24 @@ function nodb_entry_get_all($o){
 	$all = array_diff($all,['.','..']);
 	return $all;
 }
+function nodb_entry_update($o){
+	if(!isset($o['table'])){
+		return false;
+	}
+	if(!isset($o['name'])){
+		return false;
+	}
+	if(!isset($o['data'])){
+		return false;
+	}
+	$table 	= $o['table'];
+	$name 	= $o['name'];
+	$data 	= $o['data'];
+	if(!nodb_entry_remove(['table'=>$table,'name'=>$name]) === true){
+		return false;
+	}
+	if(!nodb_entry_add(['table'=>$table,'name'=>$name,'data'=>$data]) === true){
+		return false;
+	}
+	return true;
+}
