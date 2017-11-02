@@ -1,11 +1,17 @@
 # noDb
 ----------
 **Constants**
+
 **NODBROOT**
+
 *Path to data storage (outside of your web root)*
+
 **NODBKEY**
+
 *Password used to encrypt data*
+
  **NODBIV**
+ 
 *IV used in data encryption*
 
 **Functions**
