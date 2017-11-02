@@ -12,6 +12,14 @@ function nodb_table_create($o){
 	}
 	return mkdir(NODBROOT.$table);
 }
+function nodb_table_get_all(){
+	if(!file_exists(NODBROOT)){
+		return false;
+	}
+	$all = scandir(NODBROOT);
+	$all = array_diff($all,['.','..']);
+	return $all;
+}
 function nodb_entry_add($o){
 	if(!isset($o['table'])){
 		return false;
