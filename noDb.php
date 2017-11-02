@@ -1,20 +1,18 @@
 <?php
-
-const NODBROOT = "data/";
+const NODBROOT 	= "data/";
 const NODBKEY 	= "noDbIsAwesome!";
 const NODBIV	= "1234567890123456";
-function nodb_create_table($o){
+function nodb_table_create($o){
 	if(!isset($o['table'])){
 		return "Table not set";
 	}
-	$table	=$o['table'];
+	$table	= $o['table'];
 	if(file_exists(NODBROOT.$table)){
 		return "Table exists";
 	}
 	return mkdir(NODBROOT.$table);
 }
-
-function nodb_add_entry($o){
+function nodb_entry_add($o){
 	if(!isset($o['table'])){
 		return "No Table";
 	}
@@ -38,8 +36,7 @@ function nodb_add_entry($o){
 	fclose($fp);
 	return true;
 }
-
-function nodb_get_entry($o){
+function nodb_entry_get($o){
 	if(!isset($o['table'])){
 		return "No Table";
 	}
@@ -57,8 +54,7 @@ function nodb_get_entry($o){
 	$data = json_decode(openssl_decrypt(file_get_contents(NODBROOT.$table.'/'.$name),'AES-256-CBC',NODBKEY,0,NODBIV),true);
 	return $data;
 }
-
-function nodb_remove_entry($o){
+function nodb_entry_remove($o){
 	if(!isset($o['table'])){
 		return "No Table";
 	}
@@ -76,4 +72,16 @@ function nodb_remove_entry($o){
 	$rm = NODBROOT.$table.'/'.$name;
 	unlink($rm);
 	return true;
+}
+function nodb_entry_get_all($o){	
+	if(!isset($o['table'])){
+		return "No Table";
+	}
+	$table 	= $o['table'];
+	if(!file_exists(NODBROOT.$table)){
+		return "Table does not exist";
+	}
+	$all = scandir(NODBROOT.$table);
+	$all = array_diff($all,['.','..']);
+	return $all;
 }
